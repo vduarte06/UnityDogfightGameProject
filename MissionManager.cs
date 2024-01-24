@@ -33,16 +33,31 @@ public class MissionManager : MonoBehaviour
             if (mission.IsMissionComplete())
             {
                 missions.RemoveAt(i);
-                Debug.Log("Mission Completed: " + mission.GetMissionName());
+                Debug.Log("Mission Completed: " + mission.GetMissionKey());
             }
         }
     }
 
     public void AssignMission(Mission mission)
     {
-        
         missions.Add(mission);
-        Debug.Log("Mission Assigned: " + mission.GetMissionName());
+        Debug.Log("Mission Assigned: " + mission.GetMissionKey());
+    }
+    
+
+    public Mission GetMissionByKey(string key)
+    {
+        
+        for (int i = missions.Count - 1; i >= 0; i--)
+        {
+            Mission mission = missions[i];
+
+            if (mission.GetMissionKey()==key)
+            {
+               return mission;
+            }
+        }
+        return null;
     }
 
     

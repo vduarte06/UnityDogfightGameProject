@@ -1,12 +1,13 @@
-public class SampleMission : Mission
+public class Mission1 : Mission
 {
+    private string key = "Stage0";
     public int targetScore = 10;
     public int currentScore = 0;
 
     public override void UpdateMission()
     {
         
-        currentScore +=1; 
+
     }
 
     public override bool IsMissionComplete()
@@ -15,10 +16,11 @@ public class SampleMission : Mission
         return currentScore >= targetScore;
     }
 
-    public override string GetMissionName()
+    public override string GetMissionKey()
     {
-        return "Sample Mission";
+        return key;
     }
+
 }
 
 

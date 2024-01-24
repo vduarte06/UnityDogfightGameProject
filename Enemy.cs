@@ -3,10 +3,9 @@ using UnityEngine.Pool;
 using System.Collections;
 using hadrack.gpst.core.events;
 
-public class Player: MonoBehaviour 
+public class Enemy: MonoBehaviour 
 {
-    public SOEvent<int> updatePlayerEnergyEvent;
-    public SOEvent<string> collisionMessage;
+    public SOEvent<int> updateEnemyEnergyEvent;
     PlaneController planeController;
 
     void Start(){
@@ -18,16 +17,19 @@ public class Player: MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Terrain")){
             planeController.health = 0;
-            collisionMessage?.invoke("Fatal Collision With Terrain");
         }
         else if(!collision.gameObject.tag.Contains("Bullet") && !collision.gameObject.name.Contains("Aircraft")){
             planeController.health = 0;
-            collisionMessage?.invoke("Fatal Collision With Another Aircraft/Terrain");
         }
         else if(!collision.gameObject.tag.Contains(gameObject.tag)){
             planeController.health --;
-            updatePlayerEnergyEvent?.invoke(planeController.health);
+            int healthPercent = Mathf.RoundToInt((planeController.health/planeController.maxHealth)*100);
+
+            updateEnemyEnergyEvent?.invoke(planeController.health);
+
         }
+        
+        
     }
    
 }

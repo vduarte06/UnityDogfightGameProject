@@ -13,7 +13,7 @@ public class PropellerAnimation : MonoBehaviour
     // Rotate the propeller smoothly
     private void RotatePropeller()
     {
-        // Rotate the propeller around its local forward axis
+        // Rotate the propeller around its local axis
         transform.Rotate(new Vector3(0,1,0), rotationSpeed * Time.deltaTime);
     }
 }

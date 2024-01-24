@@ -1,15 +1,16 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using hadrack.gpst.core.events;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance; // Singleton instance
+    public static GameManager instance;
 
-    public int score = 0; // Example score variable
+    public SOEvent<string> loadMissionEvent;
+    public SOEvent<int> updatePlayerEnergyEvent;
 
     void Awake()
     {
-        // Implementing a simple Singleton pattern to ensure only one GameManager exists
         if (instance == null)
         {
             instance = this;
@@ -24,19 +25,16 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         SceneManager.LoadScene(0); 
-        MissionManager.instance.AssignMission(new SampleMission());
+        MissionManager.instance.AssignMission(new Mission1());
+        loadMissionEvent.subscribe(OnLoadMission);
+        updatePlayerEnergyEvent.subscribe(OnUpdatePlayerEnergyEvent);
     }
 
     void Update()
     {
-        // Check for game over conditions or other continuous checks
+        
     }
 
-    public void IncreaseScore(int amount)
-    {
-        score += amount;
-
-    }
 
     public void GameOver()
     {
@@ -49,6 +47,14 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
+    }
+
+    void OnLoadMission(string missionKey) { 
+        Mission m = MissionManager.instance.GetMissionByKey(missionKey);
+        SceneManager.LoadScene(m.GetMissionKey());
+    }
+
+    void OnUpdatePlayerEnergyEvent(int energy) { 
     }
 
 }
